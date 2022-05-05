@@ -14,8 +14,8 @@ A clone of an arcade game called Space Invaders.
 
 ## Links
 
-- Solution URL: [Solution]()
-- Live Site URL: [Live Site]()
+- Solution URL: [Solution](https://github.com/fidellim/Space-Invaders-HTML-SCSS-JS)
+- Live Site URL: [Live Site](https://space-invaders-html-fidellim.netlify.app/)
 
 ## References
 
