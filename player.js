@@ -7,6 +7,7 @@ export default class Player {
 			y: 0,
 		};
 		this.rotation = 0;
+		this.opacity = 1;
 
 		const image = new Image();
 		image.src = "./images/spaceship.png";
@@ -24,6 +25,7 @@ export default class Player {
 
 	draw() {
 		this.c.save();
+		this.c.globalAlpha = this.opacity;
 		this.c.translate(
 			this.position.x + this.width / 2,
 			this.position.y + this.height / 2
