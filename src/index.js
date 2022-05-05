@@ -4,7 +4,23 @@ import Grid from "./grid";
 import Particle from "./particle";
 import "./styles/index.scss";
 
+// Get the modal
+let modal = document.getElementById("modal");
+let closeBtn = document.getElementsByClassName("close")[0];
+
+closeBtn.onclick = function () {
+	modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+	if (event.target == modal) {
+		modal.style.display = "none";
+	}
+};
+const tryAgainBtn = document.getElementById("tryAgainBtn");
+const newGameBtn = document.getElementById("newGameBtn");
 const scoreEl = document.querySelector("#scoreEl");
+const scoreFinal = document.querySelector("#scoreFinal");
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
@@ -13,7 +29,7 @@ canvas.height = innerHeight - 50 - 4.1;
 // canvas.width = 1024;
 // canvas.height = 576;
 
-const player = new Player(c, canvas);
+let player = new Player(c, canvas);
 const projectiles = [];
 const grids = [];
 const invaderProjectiles = [];
@@ -41,6 +57,48 @@ const keys = {
 	},
 };
 
+// RESET GAME
+tryAgainBtn.onclick = () => {
+	game.over = false;
+	game.active = true;
+	player.opacity = 1;
+	score = 0;
+	scoreEl.innerHTML = score;
+	grids.splice(0, grids.length);
+	projectiles.splice(0, projectiles.length);
+	invaderProjectiles.splice(0, invaderProjectiles.length);
+	modal.style.display = "none";
+	player = new Player(c, canvas);
+	frames = 0;
+	spawnBuffer -= 100;
+	animate();
+};
+
+newGameBtn.onclick = () => {
+	setTimeout(() => {
+		player.opacity = 0;
+		game.over = true;
+		game.active = false;
+	}, 0);
+
+	setTimeout(() => {
+		game.over = false;
+		game.active = true;
+		player.opacity = 1;
+		score = 0;
+		scoreEl.innerHTML = score;
+		grids.splice(0, grids.length);
+		projectiles.splice(0, projectiles.length);
+		invaderProjectiles.splice(0, invaderProjectiles.length);
+		modal.style.display = "none";
+		player = new Player(c, canvas);
+		frames = 0;
+		spawnBuffer = 0;
+		spawnBuffer -= 100;
+		animate();
+	}, 1000);
+};
+
 function createScoreLabel({ score = 100, object }) {
 	const scoreLabel = document.createElement("label");
 	scoreLabel.innerHTML = score;
@@ -62,17 +120,17 @@ function createScoreLabel({ score = 100, object }) {
 }
 
 function rectangularCollision({ rectangle1, rectangle2 }) {
-	return (
-		rectangle1.position.y + rectangle1.height >= rectangle2.position.y &&
-		rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
-		rectangle1.position.x <= rectangle2.position.x + rectangle2.width
-	);
+	if (rectangle1.position && rectangle2.position) {
+		return (
+			rectangle1.position.y + rectangle1.height >= rectangle2.position.y &&
+			rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
+			rectangle1.position.x <= rectangle2.position.x + rectangle2.width
+		);
+	}
+	return false;
 }
 
 function endGame() {
-	console.log("you lose");
-	console.log(`Your score is ${score}`);
-
 	setTimeout(() => {
 		player.opacity = 0;
 		game.over = true;
@@ -80,6 +138,8 @@ function endGame() {
 
 	setTimeout(() => {
 		game.active = false;
+		scoreFinal.innerHTML = score;
+		modal.style.display = "flex";
 	}, 1000);
 
 	createParticles({
@@ -87,19 +147,6 @@ function endGame() {
 		color: "white",
 		fades: true,
 	});
-
-	// reset game
-	// setTimeout(() => {
-	// 	game.active = true;
-	// 	player.opacity = 1;
-	// 	game.over = false;
-	// 	score = 0;
-	// 	scoreEl.innerHTML = score;
-	// 	grids.splice(0, grids.length);
-	// 	projectiles.splice(0, projectiles.length);
-	// 	invaderProjectiles.splice(0, invaderProjectiles.length);
-	// 	animate();
-	// }, 4000);
 }
 
 for (let i = 0; i < 100; i++) {
@@ -260,7 +307,6 @@ const animate = () => {
 						// remove invader and projectile
 						if (invaderFound && projectileFound) {
 							score += 100;
-							console.log(score);
 							scoreEl.innerHTML = score;
 
 							// dynamic score labels
@@ -321,8 +367,6 @@ const animate = () => {
 
 	// spawning enemies
 	if (frames % randomInterval === 0) {
-		console.log(spawnBuffer);
-		console.log(randomInterval);
 		spawnBuffer = spawnBuffer < 0 ? 100 : spawnBuffer;
 		grids.push(new Grid(c, canvas, invaderProjectiles));
 		randomInterval = Math.floor(Math.random() * 500 + spawnBuffer);
@@ -347,6 +391,7 @@ const animate = () => {
 
 	frames++;
 };
+
 animate();
 
 addEventListener("keydown", ({ key }) => {
@@ -393,7 +438,6 @@ addEventListener("keyup", ({ key }) => {
 			keys.rightKey.pressed = false;
 			break;
 		case " ":
-			console.log(" ");
 			keys.space.pressed = false;
 			break;
 	}

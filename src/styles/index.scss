@@ -22,7 +22,7 @@ body {
     font-size: 14px;
 }
 
-.container {
+.score-container {
     position: absolute;
     left: 10px;
     top: 10px;
@@ -31,6 +31,99 @@ body {
     padding: .5rem 2rem;
 }
 
+.new-game-container {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10;
+
+    button {
+        font-family: 'spaceInvaderFont';
+        border-radius: 7px;
+        padding: .5rem 1.25rem;
+        background-color: #5353F1;
+        border: 0;
+    }
+}
+
 .text {
     color: white;
+}
+
+.modal {
+display: none;
+/* Hidden by default */
+position: fixed;
+/* Stay in place */
+// z-index: 100;
+/* Sit on top */
+// padding-top: 100px;
+/* Location of the box */
+left: 0;
+top: 0;
+width: 100%;
+/* Full width */
+height: 100%;
+/* Full height */
+overflow: auto;
+/* Enable scroll if needed */
+background-color: rgb(0, 0, 0);
+/* Fallback color */
+background-color: rgba(0, 0, 0, 0.4);
+// display: flex;
+/* Black w/*/
+
+}
+
+/* Modal Content */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid #888;
+    border-radius: 7px;
+    width: 80%;
+
+    h1{
+        font-size: 3rem;
+        color: #DB55DD;
+    }
+
+    p {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .close {
+        align-self: flex-end;
+        font-size: 2rem;
+        color: grey;
+        cursor: pointer;
+    }
+
+    button {
+        font-family: 'spaceInvaderFont';
+        border-radius: 7px;
+        padding: .5rem 1.25rem;
+        background-color: #F83B3A;
+    }
+}
+
+
+button {
+    color: white;
+    cursor: pointer;
+
+    &:active {
+        transform: scale(.98);
+    }
+
+    &:hover {
+        opacity: .8;
+    }
 }

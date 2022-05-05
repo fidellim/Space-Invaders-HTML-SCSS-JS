@@ -7,11 +7,21 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
-    <div id="parentDiv" class="container">
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1>You lose!</h1>
+            <p>Score: <span id="scoreFinal">3000</span></p>
+            <button id="tryAgainBtn">Try Again</button>
+        </div>
+    </div>
+    <div id="parentDiv" class="score-container">
         <p class="text">
             <span>Score:</span> <span id="scoreEl">0</span>
         </p>
-
+    </div>
+    <div class="new-game-container">
+        <button id="newGameBtn">New Game</button>
     </div>
     <canvas></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
