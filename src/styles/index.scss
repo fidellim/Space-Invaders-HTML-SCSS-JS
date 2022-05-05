@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'spaceInvaderFont';
+    src: url('./space_invaders.woff2') format('font-woff2'),
+    url('./space_invaders.woff') format('woff'),
+    url('./space_invaders.ttf') format('truetype');
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +18,7 @@ body {
     height: 100vh;
     align-items: flex-end;
     background-color: black;
-    font-family: sans-serif;
+    font-family: 'spaceInvaderFont';
     font-size: 14px;
 }
 
